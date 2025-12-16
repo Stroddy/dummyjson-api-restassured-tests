@@ -7,49 +7,61 @@ Automated API tests for the public **DummyJSON API**, implemented using:
 - **RestAssured**
 - **Maven**
 
-This project focuses on practicing REST API automation through CRUD operations and negative cases on real public endpoints.
+This project focuses on practicing REST API automation using a clean client-based approach,
+POJO deserialization and readable assertions on real public endpoints.
 
 ---
 
-## 📌 Covered Functionality
+📌 **Covered Functionality**
 
-### **Products Module**
+### Products Module
+
 Implemented automated tests for:
 
 - `GET /products`
-- `GET /products/{id}` (valid & invalid)
-- `POST /products/add` (valid & invalid JSON)
-- `PUT /products/{id}` (valid & invalid)
-- `DELETE /products/{id}` (valid & invalid)
+- `GET /products/{id}`
+- `GET /products/search?q=`
+- `GET /products/category/{category}`
+- `POST /products/add`
+- `PUT /products/{id}`
+- `DELETE /products/{id}`
 
-**Checks include:**
+Checks include:
 
-- Status codes (200, 201, 400, 404)
-- JsonPath field extraction
-- Request/response value validation
-- Checking error messages
-- Checking boolean flags like `isDeleted`
+- Request/response data validation
+- POJO deserialization using Jackson
+- Business logic checks (e.g. list size vs limit)
+- Field validation (id, title, price, category)
+- Checking boolean flags like `isDeleted` and `deletedOn`
 
 ---
 
-## 📌 Planned Additions
+📌 **Planned Additions**
 
 - Add **Auth module** test coverage:
-    - `POST /auth/login`
-    - `GET /auth/me`
-    - `POST /auth/refresh`
-    - Positive & negative cases (valid token / invalid token)
+  - `POST /auth/login`
+  - `GET /auth/me`
+  - `POST /auth/refresh`
+- Positive & negative cases (valid / invalid token)
+- Introduce base client and shared configuration layer
+- Extend project with another public API
 
 ---
 
-## 📂 Project Structure
+📂 **Project Structure**
 
 ```text
 src/
 └── test/
     └── java/
+        ├── config/
+        │   └── ApiConfig.java
         └── dummyjson/
-            └── ProductsTests.java
+            ├── ProductsClient.java
+            ├── ProductsTests.java
+            ├── Product.java
+            ├── ProductsResponse.java
+            └── UpdateProductRequest.java
 pom.xml
 .gitignore
 README.md
@@ -84,16 +96,16 @@ mvn -Dtest=ProductsTests test
 | **RestAssured** | API requests & JSON parsing |
 | **JUnit 5** | Test framework |
 | **Maven** | Build system |
-| **JsonPath** | Extracting JSON fields |
+| **Jackson** | POJO serialization/deserialization |
 
 ---
 
 ## 🎯 Project Goals
 
 - Practice real API automation with Java
-- Cover Products and Auth endpoints with clean positive/negative tests
-- Build a simple, readable, portfolio-ready API testing project
-- Improve the project later by introducing model classes and object-based request/response handling
+- Build a clean, readable, portfolio-ready API testing project
+- Apply REST Assured best practices (client layer, POJOs, assertions)
+- Gradually extend coverage with Auth and additional APIs
 
 ---
 
