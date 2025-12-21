@@ -4,15 +4,32 @@ Automated API tests for the public **DummyJSON API**, implemented using:
 
 - **Java 17**
 - **JUnit 5**
-- **RestAssured**
+- **Rest Assured**
 - **Maven**
 
-This project focuses on practicing REST API automation using a clean client-based approach,
-POJO deserialization and readable assertions on real public endpoints.
+The project demonstrates a clean API automation approach with:
+client layer separation, POJO deserialization and readable assertions on real public endpoints.
 
 ---
 
-📌 **Covered Functionality**
+## ✅ Implemented Functionality
+
+### Auth Module
+
+Implemented automated tests for:
+
+- `POST /auth/login`
+- `GET /auth/me`
+- `POST /auth/refresh`
+
+Includes:
+- Positive test cases
+- Full **smoke-flow**: `login → me → refresh → me`
+- Token-based authorization
+- Credentials management via environment variables (`.env`)
+- Clear separation between clients and tests
+
+---
 
 ### Products Module
 
@@ -27,24 +44,23 @@ Implemented automated tests for:
 - `DELETE /products/{id}`
 
 Checks include:
-
-- Request/response data validation
-- POJO deserialization using Jackson
+- Request/response validation
+- POJO deserialization (Jackson)
 - Business logic checks (e.g. list size vs limit)
-- Field validation (id, title, price, category)
-- Checking boolean flags like `isDeleted` and `deletedOn`
+- Field validation (`id`, `title`, `price`, `category`)
+- Flags validation (`isDeleted`, `deletedOn`)
 
 ---
 
-📌 **Planned Additions**
+## 🧪 Planned Improvements
 
-- Add **Auth module** test coverage:
-  - `POST /auth/login`
-  - `GET /auth/me`
-  - `POST /auth/refresh`
-- Positive & negative cases (valid / invalid token)
-- Introduce base client and shared configuration layer
-- Extend project with another public API
+- Add **negative test cases** for:
+  - Auth module (invalid credentials, invalid tokens, expired tokens)
+  - Products module (invalid ids, invalid payloads)
+- Introduce raw HTTP response handling for negative scenarios
+- Use JsonPath for error validation
+
+> Reporting tools (Allure, etc.) will be implemented in a separate project.
 
 ---
 
@@ -52,16 +68,16 @@ Checks include:
 
 ```text
 src/
+├── main/
+│   └── java/
+│       ├── auth/        ← API clients & models
+│       ├── products/    ← API clients & models
+│       └── config/      ← API configuration
 └── test/
     └── java/
-        ├── config/
-        │   └── ApiConfig.java
-        └── products/
-            ├── ProductsClient.java
-            ├── ProductsTests.java
-            ├── Product.java
-            ├── ProductsResponse.java
-            └── UpdateProductRequest.java
+        ├── auth/        ← Auth tests
+        ├── products/   ← Products tests
+        └── config/     ← Test credentials
 pom.xml
 .gitignore
 README.md
@@ -70,6 +86,16 @@ README.md
 ---
 
 ## 🚀 Running Tests
+Prerequisites
+
+Java 17 and Maven installed.
+
+Setup credentials
+
+Create a .env file in the project root (see .env.example):
+DUMMYJSON_USERNAME=emilys
+DUMMYJSON_PASSWORD=emilyspass
+
 
 Run all tests:
 
