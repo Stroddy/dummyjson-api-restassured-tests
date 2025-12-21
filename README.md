@@ -56,7 +56,7 @@ src/
     └── java/
         ├── config/
         │   └── ApiConfig.java
-        └── dummyjson/
+        └── products/
             ├── ProductsClient.java
             ├── ProductsTests.java
             ├── Product.java

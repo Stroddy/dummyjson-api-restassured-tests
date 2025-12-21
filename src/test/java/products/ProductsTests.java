@@ -1,12 +1,9 @@
-package dummyjson;
+package products;
 
 import config.ApiConfig;
-
-
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 

@@ -1,4 +1,4 @@
-package dummyjson;
+package products;
 
 
 // Request model for updating a product

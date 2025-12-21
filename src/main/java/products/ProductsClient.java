@@ -1,5 +1,6 @@
-package dummyjson;
+package products;
 
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import static io.restassured.RestAssured.given;
 
@@ -9,7 +10,8 @@ public class ProductsClient {
     // GET /products → returns list of products
     public ProductsResponse getAllProducts() {
 
-        return given()
+        return RestAssured
+                .given()
                 .contentType(ContentType.JSON)      // request will use JSON
                 .when()
                 .get("/products")                   // endpoint: GET /products
@@ -19,7 +21,8 @@ public class ProductsClient {
     // GET /products/{id} → returns single product by ID
     public Product getProductById(int id) {
 
-        return given()
+        return RestAssured
+                .given()
                 .contentType(ContentType.JSON)       // request uses JSON
                 .pathParam("id", id)
                 .when()
@@ -29,7 +32,8 @@ public class ProductsClient {
 
     // GET /products/search?q={query} → returns list of matched products
     public ProductsResponse searchProductsByName(String query) {
-        return given()
+        return RestAssured
+                .given()
                 .contentType(ContentType.JSON)
                 .queryParam("q", query)
                 .when()
@@ -40,7 +44,8 @@ public class ProductsClient {
     // GET /products/category/{category}
     public ProductsResponse getProductsByCategory(String category) {
 
-        return given()
+        return RestAssured
+                .given()
                 .pathParam("category", category)
                 .contentType(ContentType.JSON)
                 .when()
@@ -51,7 +56,8 @@ public class ProductsClient {
     // POST /products/add - create a product
     public Product addProduct(Product product) {
 
-        return given()
+        return RestAssured
+                .given()
                 .contentType(ContentType.JSON)
                 .body(product)
                 .when()
@@ -62,7 +68,8 @@ public class ProductsClient {
 
     // PUT /products/{id} - update a product
     public Product updateProduct(int id, UpdateProductRequest request) {
-        return given()
+        return RestAssured
+                .given()
                 .contentType(ContentType.JSON)
                 .pathParam("id", id)
                 .body(request)
@@ -74,7 +81,8 @@ public class ProductsClient {
 
     // DELETE /products/{id} - delete a product
     public Product deleteProduct(int id) {
-        return given()
+        return RestAssured
+                .given()
                 .contentType(ContentType.JSON)
                 .pathParam("id", id)
                 .when()

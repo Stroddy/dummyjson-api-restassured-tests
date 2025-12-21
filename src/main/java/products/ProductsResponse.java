@@ -1,4 +1,4 @@
-package dummyjson;
+package products;
 
 import java.util.List;
 
