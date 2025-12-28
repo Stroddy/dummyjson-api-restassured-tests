@@ -1,14 +1,15 @@
 # DummyJSON API Automation Tests
 
-Automated API tests for the public **DummyJSON API**, implemented using:
+Automated API tests for the public **DummyJSON API** using:
 
 - **Java 17**
 - **JUnit 5**
 - **Rest Assured**
 - **Maven**
+- **Jackson** (POJO serialization/deserialization)
 
 The project demonstrates a clean API automation approach with:
-client layer separation, POJO deserialization and readable assertions on real public endpoints.
+client layer separation (raw vs happy-path POJOs) and readable assertions on real public endpoints.
 
 ---
 
@@ -23,11 +24,14 @@ Implemented automated tests for:
 - `POST /auth/refresh`
 
 Includes:
-- Positive test cases
+- Positive test cases (POJO deserialization)
+- Negative test cases using raw HTTP responses:
+  - invalid / empty / missing credentials
+  - missing / invalid access token
+  - missing / invalid refresh token
 - Full **smoke-flow**: `login → me → refresh → me`
-- Token-based authorization
 - Credentials management via environment variables (`.env`)
-- Clear separation between clients and tests
+- Clear separation between raw clients and happy-path POJO methods
 
 ---
 
@@ -46,25 +50,13 @@ Implemented automated tests for:
 Checks include:
 - Request/response validation
 - POJO deserialization (Jackson)
-- Business logic checks (e.g. list size vs limit)
+- Basic contract/business checks (e.g. list size vs limit / total vs returned size)
 - Field validation (`id`, `title`, `price`, `category`)
-- Flags validation (`isDeleted`, `deletedOn`)
+- Delete flags validation (`isDeleted`, `deletedOn`)
 
 ---
 
-## 🧪 Planned Improvements
-
-- Add **negative test cases** for:
-  - Auth module (invalid credentials, invalid tokens, expired tokens)
-  - Products module (invalid ids, invalid payloads)
-- Introduce raw HTTP response handling for negative scenarios
-- Use JsonPath for error validation
-
-> Reporting tools (Allure, etc.) will be implemented in a separate project.
-
----
-
-📂 **Project Structure**
+## 📂 Project Structure
 
 ```text
 src/
@@ -76,8 +68,8 @@ src/
 └── test/
     └── java/
         ├── auth/        ← Auth tests
-        ├── products/   ← Products tests
-        └── config/     ← Test credentials
+        ├── products/    ← Products tests
+        └── config/      ← Test credentials
 pom.xml
 .gitignore
 README.md
@@ -108,9 +100,8 @@ mvn test
 Run a specific test class:
 
 ```bash
-
+mvn -Dtest=AuthTests test
 mvn -Dtest=ProductsTests test
-
 ```
 
 ---
@@ -119,9 +110,9 @@ mvn -Dtest=ProductsTests test
 
 | Tool | Purpose |
 |------|----------|
-| **RestAssured** | API requests & JSON parsing |
+| **RestAssured** | API requests & response handling |
 | **JUnit 5** | Test framework |
-| **Maven** | Build system |
+| **Maven** | Build & dependency management |
 | **Jackson** | POJO serialization/deserialization |
 
 ---
@@ -131,7 +122,6 @@ mvn -Dtest=ProductsTests test
 - Practice real API automation with Java
 - Build a clean, readable, portfolio-ready API testing project
 - Apply REST Assured best practices (client layer, POJOs, assertions)
-- Gradually extend coverage with Auth and additional APIs
 
 ---
 
